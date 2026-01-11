@@ -28,14 +28,15 @@
   <nav class="navbar">
     <div class="container nav-container">
       <a href="#home" class="logo">RL<span>.DEV</span></a>
+      <button class="menu-toggle" aria-expanded="false" aria-label="Open menu">
+        <i class="fas fa-bars"></i>
+      </button>
 
       <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
 
-        <!-- CTA -->
         <li>
           <a href="https://app.cal.eu/rl-dev/30min?overlayCalendar=true" target="_blank" rel="noopener" class="nav-cta">
             Book a Call
@@ -84,22 +85,27 @@
       <div class="projects-grid">
 
         <div class="project-card">
-          <h3>AI Dev Agent</h3>
+          <h3>AI Dev Agent</h3><br>
           <p>Autonomous system that detects bugs, generates patches, runs tests and opens pull requests.</p>
           <p class="tech">Python · OpenAI · GitHub API · CI/CD</p>
         </div>
 
-        <div class="project-card">
-          <h3>Task Manager API</h3>
-          <p>JWT authenticated backend with real-time updates and role-based permissions.</p>
-          <p class="tech">Django · PostgreSQL · WebSockets</p>
-        </div>
+        <a href="https://task-manager-fullstack-lilac.vercel.app/" target="_blank" rel="noopener" class="project-link">
+          <div class="project-card">
+            <h3>Weather App</h3><br>
+            <p>Live weather platform with API integration and responsive frontend.</p>
+            <p class="tech">JavaScript · REST API · UI</p>
+          </div>
+        </a>
 
-        <div class="project-card">
-          <h3>Weather App</h3>
-          <p>Live weather platform with API integration and responsive frontend.</p>
-          <p class="tech">JavaScript · REST API · UI</p>
-        </div>
+        <!-- Weather App clickable -->
+        <a href="https://29rl.github.io/weather-app/" target="_blank" rel="noopener" class="project-link">
+          <div class="project-card">
+            <h3>Weather App</h3><br>
+            <p>Live weather platform with API integration and responsive frontend.</p>
+            <p class="tech">JavaScript · REST API · UI</p>
+          </div>
+        </a>
 
       </div>
     </div>
@@ -126,7 +132,7 @@
 
       <div class="contact-icons">
 
-        <a href="https://github.com/29rl" target="_blank" rel="noopener" class="contact-icon">
+        <a href="https://29rl.github.io/weather-app/" target="_blank" rel="noopener" class="contact-icon">
           <i class="fab fa-github"></i>
           <span>GitHub</span>
         </a>
@@ -136,7 +142,6 @@
           <span>LinkedIn</span>
         </a>
 
-        <!-- PRO EMAIL -->
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=robertlisita29@gmail.com&su=Intro%20Call&body=Hi%20Robert,%0A%0AI%20saw%20your%20portfolio%20and%20I'd%20like%20to%20talk."
           target="_blank" rel="noopener" class="contact-icon">
           <i class="fas fa-envelope"></i>
@@ -149,7 +154,7 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    © 2025 <a href="#home" class="logo">RL<span>.DEV</span></a>
+    © <span id="currentYear">2025</span> <a href="#home" class="logo">RL<span>.DEV</span></a>
   </footer>
 
 </body>
