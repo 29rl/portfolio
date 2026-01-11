@@ -8,12 +8,16 @@
 
   --text: #e5e7eb;
   --muted: #9ca3af;
-  --border: rgba(255,255,255,0.08);
+  --border: rgba(255, 255, 255, 0.08);
 
-  --reggae-gradient: linear-gradient(90deg, var(--red), var(--yellow), var(--green));
+  --reggae-gradient: linear-gradient(
+    90deg,
+    var(--red),
+    var(--yellow),
+    var(--green)
+  );
 
-  --glow: 0 0 25px rgba(31,167,102,0.25),
-          0 0 50px rgba(230,57,70,0.15);
+  --glow: 0 0 25px rgba(31, 167, 102, 0.25), 0 0 50px rgba(230, 57, 70, 0.15);
 }
 
 /* RESET */
@@ -33,16 +37,26 @@ body {
 
 /* Subtle living background */
 @keyframes rlBreath {
-  0% { filter: hue-rotate(0deg) brightness(1); }
-  50% { filter: hue-rotate(-5deg) brightness(1.02); }
-  100% { filter: hue-rotate(5deg) brightness(0.98); }
+  0% {
+    filter: hue-rotate(0deg) brightness(1);
+  }
+  50% {
+    filter: hue-rotate(-5deg) brightness(1.02);
+  }
+  100% {
+    filter: hue-rotate(5deg) brightness(0.98);
+  }
 }
 
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at top, rgba(31,167,102,0.05), transparent 70%);
+  background: radial-gradient(
+    circle at top,
+    rgba(31, 167, 102, 0.05),
+    transparent 70%
+  );
   animation: rlBreath 40s ease-in-out infinite alternate;
   z-index: -1;
 }
@@ -59,7 +73,7 @@ body::before {
   position: fixed;
   top: 0;
   width: 100%;
-  background: rgba(7,8,7,0.85);
+  background: rgba(7, 8, 7, 0.85);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   z-index: 1000;
@@ -72,9 +86,14 @@ body::before {
   height: 70px;
 }
 
+/* Ensure positioned parent for absolute mobile menu */
+.nav-container {
+  position: relative;
+}
+
 /* LOGO */
 .logo {
-  font-size: 1.5rem;
+  font-size: clamp(1.1rem, 4vw, 1.5rem);
   font-weight: 700;
   background: var(--reggae-gradient);
   -webkit-background-clip: text;
@@ -86,30 +105,63 @@ body::before {
 
 .logo:hover {
   filter: brightness(1.1);
-  text-shadow: 0 0 18px rgba(31,167,102,0.45);
+  text-shadow: 0 0 18px rgba(31, 167, 102, 0.45);
 }
 
 /* NAV LINKS */
 .nav-links {
   display: flex;
-  gap: 32px;
+  gap: clamp(8px, 3vw, 32px);
   list-style: none;
+  align-items: center;
+  flex-wrap: nowrap;
+  min-width: 0;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
+
+
+/* Mobile menu toggle (hidden on desktop) */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 1.3rem;
+  cursor: pointer;
 }
 
 .nav-links a {
   text-decoration: none;
   color: var(--muted);
   transition: 0.3s;
+  white-space: nowrap;
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: center;
 }
 
 .nav-links a:hover {
   color: var(--green);
 }
 
+/* CTA button */
+.nav-cta {
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: var(--reggae-gradient);
+  color: #000 !important;
+  font-weight: 600;
+  white-space: nowrap;
+  font-size: clamp(0.75rem, 3vw, 0.95rem);
+}
+
 /* HERO */
 .hero {
   min-height: 100vh;
-  padding-top: 140px;
+  min-height: 100svh; /* ✅ FIX 1 – iOS / Chrome mobile viewport */
+  padding-top: 120px;
+  padding-bottom: 80px; /* ✅ FIX 2 – spațiu pentru butoane */
   display: flex;
   align-items: center;
 }
@@ -121,7 +173,8 @@ body::before {
 }
 
 .hero-text h1 {
-  font-size: 3.2rem;
+  font-size: clamp(2.2rem, 8vw, 3.2rem); /* ← scalează pe mobil */
+  line-height: 1.05;
   background: var(--reggae-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -162,7 +215,7 @@ body::before {
 }
 
 .outline:hover {
-  background: rgba(31,167,102,0.08);
+  background: rgba(31, 167, 102, 0.08);
 }
 
 /* CODE PANEL */
@@ -172,7 +225,7 @@ body::before {
   border-radius: 16px;
   padding: 24px;
   font-family: "JetBrains Mono", monospace;
-  color: #000; /* Text negru pentru contrast pe gradient */
+  color: #000;
   font-size: 1.1rem;
   line-height: 1.5;
   white-space: pre-wrap;
@@ -180,17 +233,21 @@ body::before {
   box-shadow: var(--glow);
   position: relative;
   overflow: hidden;
+  max-width: 100%; /* ✅ FIX 3 – nu mai iese din ecran */
 }
 
-/* Pentru a face textul mai vizibil pe gradient, poți adăuga un overlay întunecat */
+.hero-code pre {
+  margin: 0;
+  max-width: 100%;
+  overflow-x: auto; /* scroll doar dacă e nevoie */
+}
+
+/* Overlay */
 .hero-code::before {
-  content: '';
+  content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(5, 8, 6, 0.7); /* Overlay întunecat transparent */
+  inset: 0;
+  background: rgba(5, 8, 6, 0.7);
   z-index: 0;
   border-radius: 16px;
 }
@@ -198,8 +255,11 @@ body::before {
 .hero-code code {
   position: relative;
   z-index: 1;
-  color: #e5e7eb; /* Text deschis peste overlay */
+  color: #e5e7eb;
+  font-size: clamp(0.7rem, 2.6vw, 1.1rem);
+  line-height: 1.4;
 }
+
 /* SECTIONS */
 section {
   padding: 100px 0;
@@ -216,7 +276,7 @@ section {
 /* PROJECTS */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 30px;
 }
 
@@ -230,9 +290,9 @@ section {
 
 .project-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(31,167,102,0.6);
-  box-shadow: 0 0 40px rgba(31,167,102,0.25),
-              0 0 60px rgba(230,57,70,0.12);
+  border-color: rgba(31, 167, 102, 0.6);
+  box-shadow: 0 0 40px rgba(31, 167, 102, 0.25),
+    0 0 60px rgba(230, 57, 70, 0.12);
 }
 
 .project-card h3 {
@@ -248,12 +308,12 @@ section {
 /* SKILLS */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
 .skill-box {
-  background: linear-gradient(180deg, rgba(31,167,102,0.04), var(--panel));
+  background: linear-gradient(180deg, rgba(31, 167, 102, 0.04), var(--panel));
   border: 1px solid var(--border);
   padding: 26px 20px;
   border-radius: 16px;
@@ -269,16 +329,20 @@ section {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at top, rgba(31,167,102,0.12), transparent 60%);
+  background: radial-gradient(
+    circle at top,
+    rgba(31, 167, 102, 0.12),
+    transparent 60%
+  );
   opacity: 0;
   transition: 0.4s ease;
 }
 
 .skill-box:hover {
   transform: translateY(-6px);
-  border-color: rgba(31,167,102,0.6);
-  box-shadow: 0 0 30px rgba(31,167,102,0.25),
-              0 0 50px rgba(230,57,70,0.12);
+  border-color: rgba(31, 167, 102, 0.6);
+  box-shadow: 0 0 30px rgba(31, 167, 102, 0.25),
+    0 0 50px rgba(230, 57, 70, 0.12);
   color: var(--green);
 }
 
@@ -314,7 +378,7 @@ section {
 
 .contact-icon:hover i {
   transform: translateY(-4px) scale(1.05);
-  filter: drop-shadow(0 0 25px rgba(31,167,102,0.4));
+  filter: drop-shadow(0 0 25px rgba(31, 167, 102, 0.4));
 }
 
 .contact-icon:hover span {
@@ -334,8 +398,83 @@ section {
 }
 
 /* RESPONSIVE */
-@media(max-width: 900px){
+@media (max-width: 900px) {
   .hero-grid {
     grid-template-columns: 1fr;
   }
+
+  /* Show nav inline on mobile; shrink items instead of hiding */
+  .menu-toggle {
+    display: none;
+  }
+
+  .nav-links {
+    display: flex;
+    position: static;
+    right: auto;
+    top: auto;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    flex-direction: row;
+    gap: 12px;
+    min-width: 0;
+    z-index: 1100;
+    justify-content: flex-end;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+  }
 }
+
+/* For larger phones (e.g. iPhone Pro Max portrait ~428px) show inline nav instead of dropdown */
+@media (min-width: 420px) and (max-width: 900px) {
+  .menu-toggle {
+    display: none;
+  }
+
+  .nav-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo {
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
+    margin-right: 8px;
+  }
+
+  .nav-links {
+    display: flex !important;
+    position: static;
+    flex-direction: row;
+    gap: 12px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    min-width: 0;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding-top: 90px;
+    padding-bottom: 60px;
+  }
+
+  .hero-code {
+    padding: 16px;
+  }
+}
+
