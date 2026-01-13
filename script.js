@@ -1,3 +1,6 @@
+// Detect mobile devices
+const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
 function initApp() {
   // Mobile menu toggle
   const menuToggle = document.querySelector(".menu-toggle");
@@ -62,48 +65,24 @@ function initApp() {
     metricValues.forEach((metric) => metricsObserver.observe(metric));
   }
 
-  // Form submission
-  const contactForm = document.getElementById("contactForm");
-  if (contactForm) {
-    contactForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const submitBtn = contactForm.querySelector('button[type="submit"]');
-      const originalText = submitBtn.innerHTML;
-
-      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-      submitBtn.disabled = true;
-
-      setTimeout(() => {
-        submitBtn.innerHTML = '<i class="fas fa-check"></i> Sent!';
-        submitBtn.style.background = "#10b981";
-        contactForm.reset();
-
-        setTimeout(() => {
-          submitBtn.innerHTML = originalText;
-          submitBtn.disabled = false;
-          submitBtn.style.background = "";
-        }, 3000);
-      }, 1500);
-    });
-  }
-
   // Update year
   const year = document.getElementById("currentYear");
   if (year) {
     year.textContent = new Date().getFullYear();
   }
 
-  // Project card hover
-  const projectCards = document.querySelectorAll(".project-card");
-  projectCards.forEach((card) => {
-    card.addEventListener("mouseenter", () => {
-      card.style.transform = "translateY(-10px) scale(1.02)";
+  // Project card hover — desktop only
+  if (!isMobile) {
+    const projectCards = document.querySelectorAll(".project-card");
+    projectCards.forEach((card) => {
+      card.addEventListener("mouseenter", () => {
+        card.style.transform = "translateY(-10px) scale(1.02)";
+      });
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "translateY(0) scale(1)";
+      });
     });
-    card.addEventListener("mouseleave", () => {
-      card.style.transform = "translateY(0) scale(1)";
-    });
-  });
+  }
 
   // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -122,11 +101,11 @@ function initApp() {
     });
   });
 
-  // Navbar scroll behavior
+  // Navbar scroll behavior — desktop only
   let lastScroll = 0;
   const navbar = document.querySelector(".navbar");
 
-  if (navbar) {
+  if (navbar && !isMobile) {
     window.addEventListener("scroll", () => {
       const currentScroll = window.pageYOffset;
 
@@ -172,9 +151,9 @@ if (document.readyState === "loading") {
   initApp();
 }
 
-// Parallax background (safe)
+// Parallax background — desktop only
 const bg = document.querySelector(".animated-bg");
-if (bg) {
+if (bg && !isMobile) {
   window.addEventListener("scroll", () => {
     const scrolled = window.pageYOffset;
     const rate = scrolled * -0.5;
